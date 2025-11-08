@@ -1,0 +1,93 @@
+---
+description: "Pattern per le API e gestione errori"
+globs: server/api/**
+---
+
+# API Development Patterns
+
+## Struttura Standard API
+
+Ogni endpoint deve seguire questo pattern:
+
+```typescript
+import { db } from '../../utils/db'
+import { auth } from '../../utils/auth'
+import { [tabelle] } from '../../db/schema'
+
+export default defineEventHandler(async (event) => {
+  try {
+    // 1. Autenticazione (se richiesta)
+    const session = await auth.api.getSession({ headers: event.headers })
+    if (!session) {
+      throw createError({
+        statusCode: 401,
+        statusMessage: 'Non autorizzato'
+      })
+    }
+
+    // 2. Validazione input
+    const body = await readBody(event) // per POST
+    const query = getQuery(event) // per GET
+    const id = getRouterParam(event, 'id') // per parametri route
+
+    // 3. Logica business
+    const result = await db.select()...
+
+    // 4. Risposta standard
+    return {
+      success: true,
+      data: result
+    }
+  } catch (error) {
+    console.error('Errore descrittivo:', error)
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Errore interno del server'
+    })
+  }
+})
+```
+
+## Gestione Errori
+
+### Codici di Stato Standard
+- `400`: Input non valido
+- `401`: Non autenticato
+- `403`: Non autorizzato (autenticato ma senza permessi)
+- `404`: Risorsa non trovata
+- `409`: Conflitto (es. duplicato)
+- `500`: Errore interno
+
+### Messaggi in Italiano
+Tutti i messaggi di errore devono essere in italiano per l'utente finale.
+
+## Autenticazione
+
+
+### API Protette
+Tutte le altre API richiedono autenticazione tramite `auth.api.getSession()`.
+
+## Validazione Input
+
+Sempre validare:
+- Parametri obbligatori
+- Formati (es. numeri di telefono con `+`)
+- Tipi di dati
+- Lunghezze massime
+
+## Risposta Standardizzata
+
+```typescript
+// Successo
+return {
+  success: true,
+  data: result,
+  meta?: { total, page, limit } // per paginazione
+}
+
+// Lista/Collection
+return {
+  success: true,
+  [nomeRisorsa]: results // es. documents, conversations
+}
+```
