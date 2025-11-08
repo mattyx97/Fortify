@@ -18,8 +18,13 @@ export const auth = betterAuth({
       role: {
         type: "string",
         required: false,
-        defaultValue: "hr",
-        input: false // Permette input diretto durante registrazione
+        defaultValue: "company_admin", // admin, company_admin, analyst
+        input: false
+      },
+      organizationId: {
+        type: "string",
+        required: false,
+        input: true
       },
       isActive: {
         type: "boolean",
@@ -31,7 +36,7 @@ export const auth = betterAuth({
   },
   plugins: [
     admin({
-      defaultRole: "segretaria",
+      defaultRole: "company_admin",
       adminRoles: ["admin"]
     })
   ],
