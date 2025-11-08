@@ -2,114 +2,114 @@
 
 # 🛡️ Fortify
 
-### Piattaforma AI per Simulazioni Phishing e Security Awareness Training
+### AI-Powered Phishing Simulation & Security Awareness Training Platform
 
 [![Nuxt](https://img.shields.io/badge/Nuxt-4.2.1-00DC82?style=for-the-badge&logo=nuxt.js&logoColor=white)](https://nuxt.com)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9.3-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Drizzle](https://img.shields.io/badge/Drizzle-ORM-C5F74F?style=for-the-badge&logo=drizzle&logoColor=black)](https://orm.drizzle.team/)
 
-*Sistema avanzato per testare la resilienza dei dipendenti contro attacchi di social engineering*
+*Advanced system to test employee resilience against social engineering attacks*
 
-[Caratteristiche](#-caratteristiche-principali) •
-[Installazione](#-installazione-rapida) •
-[Documentazione](#-documentazione) •
-[Architettura](#-architettura)
+[Features](#-key-features) •
+[Installation](#-quick-start) •
+[Documentation](#-documentation) •
+[Architecture](#-architecture)
 
 </div>
 
 ---
 
-## 📋 Indice
+## 📋 Table of Contents
 
-- [Panoramica](#-panoramica)
-- [Caratteristiche Principali](#-caratteristiche-principali)
-- [Stack Tecnologico](#-stack-tecnologico)
-- [Installazione Rapida](#-installazione-rapida)
-- [Configurazione](#-configurazione)
-- [Utilizzo](#-utilizzo)
-- [Architettura](#-architettura)
+- [Overview](#-overview)
+- [Key Features](#-key-features)
+- [Tech Stack](#-tech-stack)
+- [Quick Start](#-quick-start)
+- [Configuration](#️-configuration)
+- [Usage](#-usage)
+- [Architecture](#-architecture)
 - [API Reference](#-api-reference)
-- [Workflow](#-workflow-completo)
-- [Sicurezza](#-sicurezza--privacy)
+- [Workflow](#-complete-workflow)
+- [Security](#-security--privacy)
 - [Roadmap](#-roadmap)
-- [Contribuire](#-contribuire)
-- [Licenza](#-licenza)
+- [Contributing](#-contributing)
+- [License](#-license)
 
 ---
 
-## 🎯 Panoramica
+## 🎯 Overview
 
-**Fortify** è una piattaforma enterprise per simulare attacchi di phishing e smishing in ambiente controllato, con l'obiettivo di aumentare la consapevolezza sulla sicurezza informatica dei dipendenti aziendali.
+**Fortify** is an enterprise platform for simulating phishing and smishing attacks in a controlled environment, designed to increase cybersecurity awareness among corporate employees.
 
-### 💡 Il Problema
+### 💡 The Problem
 
-- **91%** delle violazioni di sicurezza iniziano con un'email di phishing
-- Le aziende perdono **milioni** ogni anno per attacchi di social engineering
-- I training tradizionali sono **poco efficaci** e non personalizzati
+- **91%** of security breaches start with a phishing email
+- Companies lose **millions** annually to social engineering attacks
+- Traditional training is **ineffective** and not personalized
 
-### ✨ La Soluzione
+### ✨ The Solution
 
-Fortify utilizza **AI avanzata** (Llama 70B) e **OSINT** (scraping LinkedIn) per:
+Fortify uses **advanced AI** (Llama 70B) and **OSINT** (LinkedIn scraping) to:
 
-1. 🔍 **Analizzare** profili pubblici dei dipendenti
-2. 🤖 **Generare** messaggi phishing ultra-personalizzati
-3. 📊 **Misurare** la vulnerabilità reale del personale
-4. 📈 **Fornire** training mirato basato sui risultati
+1. 🔍 **Analyze** public employee profiles
+2. 🤖 **Generate** ultra-personalized phishing messages
+3. 📊 **Measure** real staff vulnerability
+4. 📈 **Provide** targeted training based on results
 
 ---
 
-## 🚀 Caratteristiche Principali
+## 🚀 Key Features
 
 ### 🎭 AI-Powered Personalization
 
-- **6 tipi di campagne** predefinite (password reset, CEO fraud, invoice, ecc.)
-- Messaggi personalizzati usando **Nebius AI (Llama 3.3 70B)**
-- Analisi del tono e linguaggio per massima credibilità
-- Adattamento automatico al ruolo e seniority del target
+- **6 pre-built campaign types** (password reset, CEO fraud, invoice, etc.)
+- Personalized messages using **Nebius AI (Llama 3.3 70B)**
+- Tone and language analysis for maximum credibility
+- Automatic adaptation to target's role and seniority
 
 ### 🔍 OSINT Intelligence
 
-- **Scraping automatico LinkedIn** con Puppeteer + Stealth
-- Estrazione dati: esperienze, competenze, post recenti
-- **Versioning completo** con storico modifiche profilo
-- Rate limiting intelligente per evitare detection
+- **Automated LinkedIn scraping** with Puppeteer + Stealth
+- Data extraction: experiences, skills, recent posts
+- **Complete versioning** with profile change history
+- Intelligent rate limiting to avoid detection
 
-### 🏢 Multi-Tenancy Enterprise
+### 🏢 Enterprise Multi-Tenancy
 
-- Isolamento completo tra organizzazioni
-- **3 ruoli**: Admin, Company Admin, Analyst
-- Permessi granulari con RBAC
-- Dashboard dedicata per ogni azienda
+- Complete isolation between organizations
+- **3 roles**: Admin, Company Admin, Analyst
+- Granular permissions with RBAC
+- Dedicated dashboard for each company
 
 ### 📊 Analytics & Reporting
 
-- Tracking in tempo reale: email sent, clicked, submitted
-- **Metriche avanzate**: Click-through rate, Submission rate
-- Heatmap vulnerabilità per dipartimento
-- Report PDF esportabili (coming soon)
+- Real-time tracking: email sent, clicked, submitted
+- **Advanced metrics**: Click-through rate, Submission rate
+- Vulnerability heatmap by department
+- Exportable PDF reports (coming soon)
 
 ### 🔐 Security & Compliance
 
-- Soft delete con retention completa
-- Audit logging di tutte le operazioni
-- Encryption at rest per dati sensibili
-- GDPR compliant (solo dati pubblici)
+- Soft delete with full retention
+- Audit logging of all operations
+- Encryption at rest for sensitive data
+- GDPR compliant (public data only)
 
 ---
 
-## 🛠 Stack Tecnologico
+## 🛠 Tech Stack
 
 ### Frontend (Coming Soon)
-- **Nuxt 4** - Framework Vue full-stack
-- **NuxtUI** - Design system Apple-style
-- **Tailwind CSS** - Styling utility-first
+- **Nuxt 4** - Full-stack Vue framework
+- **NuxtUI** - Apple-style design system
+- **Tailwind CSS** - Utility-first styling
 
 ### Backend
-- **Nuxt Server API** - API RESTful serverless
-- **Better Auth** - Sistema di autenticazione moderno
+- **Nuxt Server API** - Serverless RESTful API
+- **Better Auth** - Modern authentication system
 - **Drizzle ORM** - Type-safe database toolkit
-- **PostgreSQL** - Database relazionale
+- **PostgreSQL** - Relational database
 
 ### AI & Scraping
 - **Nebius AI** - Llama 3.3 70B Instruct
@@ -117,15 +117,15 @@ Fortify utilizza **AI avanzata** (Llama 70B) e **OSINT** (scraping LinkedIn) per
 - **Puppeteer Extra Stealth** - Anti-detection
 
 ### DevOps
-- **pnpm** - Package manager veloce
+- **pnpm** - Fast package manager
 - **Drizzle Kit** - Database migrations
-- **TypeScript** - Type safety end-to-end
+- **TypeScript** - End-to-end type safety
 
 ---
 
-## ⚡ Installazione Rapida
+## ⚡ Quick Start
 
-### Prerequisiti
+### Prerequisites
 
 ```bash
 node >= 18.x
@@ -136,37 +136,37 @@ postgresql >= 14.x
 ### Setup
 
 ```bash
-# 1. Clona il repository
+# 1. Clone the repository
 git clone <repository-url>
 cd Fortify
 
-# 2. Installa dipendenze
+# 2. Install dependencies
 pnpm install
 
-# 3. Configura environment
+# 3. Configure environment
 cp .env.example .env
-# Modifica .env con le tue credenziali
+# Edit .env with your credentials
 
 # 4. Setup database
 pnpm db:generate
 pnpm db:migrate
 
-# 5. Crea utente admin
+# 5. Create admin user
 pnpm setup:admin
 
-# 6. Avvia server di sviluppo
+# 6. Start development server
 pnpm dev
 ```
 
-Apri [http://localhost:3000](http://localhost:3000) 🎉
+Open [http://localhost:3000](http://localhost:3000) 🎉
 
 ---
 
-## ⚙️ Configurazione
+## ⚙️ Configuration
 
-### Variabili d'Ambiente
+### Environment Variables
 
-Crea un file `.env` nella root:
+Create a `.env` file in the root:
 
 ```env
 # Database
@@ -184,19 +184,19 @@ NODE_ENV=development
 PORT=3000
 ```
 
-### Ottenere Nebius API Key
+### Getting Nebius API Key
 
-1. Vai su [studio.nebius.ai](https://studio.nebius.ai/)
-2. Crea un account
-3. Naviga in API Keys
-4. Genera nuova chiave per Llama 3.3 70B
-5. Copia la chiave nel file `.env`
+1. Go to [studio.nebius.ai](https://studio.nebius.ai/)
+2. Create an account
+3. Navigate to API Keys
+4. Generate new key for Llama 3.3 70B
+5. Copy the key to your `.env` file
 
 ---
 
-## 📖 Utilizzo
+## 📖 Usage
 
-### 1. Crea Organizzazione (Admin)
+### 1. Create Organization (Admin)
 
 ```bash
 POST /api/organizations
@@ -208,34 +208,34 @@ Content-Type: application/json
 }
 ```
 
-### 2. Aggiungi Target Dipendenti
+### 2. Add Employee Targets
 
 ```bash
 POST /api/targets
 Content-Type: application/json
 
 {
-  "nome": "Mario Rossi",
-  "email": "mario.rossi@acmecorp.com",
+  "nome": "John Doe",
+  "email": "john.doe@acmecorp.com",
   "posizione": "Senior Developer",
   "dipartimento": "Engineering",
-  "linkedinUrl": "https://linkedin.com/in/mariorossi"
+  "linkedinUrl": "https://linkedin.com/in/johndoe"
 }
 ```
 
-### 3. Scraping Profilo
+### 3. Profile Scraping
 
 ```bash
 POST /api/scraping/linkedin
 Content-Type: application/json
 
 {
-  "targetId": "uuid-del-target",
-  "profileUrl": "https://linkedin.com/in/mariorossi"
+  "targetId": "target-uuid",
+  "profileUrl": "https://linkedin.com/in/johndoe"
 }
 ```
 
-### 4. Crea Campagna
+### 4. Create Campaign
 
 ```bash
 POST /api/campaigns
@@ -245,19 +245,19 @@ Content-Type: application/json
   "nome": "Q1 2025 Security Awareness",
   "targetIds": ["uuid1", "uuid2", "uuid3"],
   "campaignType": "password_reset",
-  "descrizione": "Test baseline awareness team"
+  "descrizione": "Baseline awareness test for engineering team"
 }
 ```
 
-L'AI genererà automaticamente messaggi personalizzati per ogni target!
+AI will automatically generate personalized messages for each target!
 
-### 5. Lancia Campagna
+### 5. Launch Campaign
 
 ```bash
 POST /api/campaigns/{campaignId}/launch
 ```
 
-### 6. Monitora Risultati
+### 6. Monitor Results
 
 ```bash
 GET /api/campaigns/{campaignId}
@@ -265,7 +265,7 @@ GET /api/campaigns/{campaignId}
 
 ---
 
-## 🏗 Architettura
+## 🏗 Architecture
 
 ### Database Schema
 
@@ -282,11 +282,11 @@ employee_target ─> social_profile ─> scraping_history (versioning)
 ```
 server/
 ├── api/
-│   ├── organizations/    # CRUD organizzazioni (admin)
-│   ├── targets/          # CRUD target dipendenti
+│   ├── organizations/    # Organization CRUD (admin)
+│   ├── targets/          # Employee targets CRUD
 │   ├── scraping/         # LinkedIn scraping
 │   ├── profiles/         # Social profiles data
-│   └── campaigns/        # Campagne phishing
+│   └── campaigns/        # Phishing campaigns
 ├── db/
 │   └── schema.ts         # Drizzle schema
 └── utils/
@@ -323,143 +323,143 @@ graph LR
 
 | Endpoint | Method | Auth | Description |
 |----------|--------|------|-------------|
-| `/api/organizations` | POST | Admin | Crea organizzazione |
-| `/api/organizations` | GET | Admin | Lista organizzazioni |
-| `/api/organizations/:id` | GET | Admin/Own | Dettaglio org |
-| `/api/organizations/:id` | PATCH | Admin | Aggiorna org |
+| `/api/organizations` | POST | Admin | Create organization |
+| `/api/organizations` | GET | Admin | List organizations |
+| `/api/organizations/:id` | GET | Admin/Own | Organization details |
+| `/api/organizations/:id` | PATCH | Admin | Update organization |
 
 ### Targets
 
 | Endpoint | Method | Auth | Description |
 |----------|--------|------|-------------|
-| `/api/targets` | POST | Company Admin | Crea target |
-| `/api/targets` | GET | Company Admin | Lista targets |
-| `/api/targets/:id` | GET | Company Admin | Dettaglio target |
-| `/api/targets/:id` | PATCH | Company Admin | Aggiorna target |
-| `/api/targets/:id` | DELETE | Company Admin | Elimina target (soft) |
+| `/api/targets` | POST | Company Admin | Create target |
+| `/api/targets` | GET | Company Admin | List targets |
+| `/api/targets/:id` | GET | Company Admin | Target details |
+| `/api/targets/:id` | PATCH | Company Admin | Update target |
+| `/api/targets/:id` | DELETE | Company Admin | Delete target (soft) |
 
 ### Scraping
 
 | Endpoint | Method | Auth | Description |
 |----------|--------|------|-------------|
-| `/api/scraping/linkedin` | POST | Company Admin | Avvia scraping |
-| `/api/scraping/history/:targetId` | GET | Company Admin | Storico scraping |
-| `/api/profiles/:profileId/latest` | GET | Company Admin | Dati più recenti |
+| `/api/scraping/linkedin` | POST | Company Admin | Start scraping |
+| `/api/scraping/history/:targetId` | GET | Company Admin | Scraping history |
+| `/api/profiles/:profileId/latest` | GET | Company Admin | Latest data |
 
 ### Campaigns
 
 | Endpoint | Method | Auth | Description |
 |----------|--------|------|-------------|
-| `/api/campaigns` | POST | Company Admin | Crea campagna |
-| `/api/campaigns` | GET | Company Admin | Lista campagne |
-| `/api/campaigns/:id` | GET | Company Admin | Dettaglio campagna |
-| `/api/campaigns/:id` | PATCH | Company Admin | Aggiorna campagna |
-| `/api/campaigns/:id/launch` | POST | Company Admin | Lancia campagna |
+| `/api/campaigns` | POST | Company Admin | Create campaign |
+| `/api/campaigns` | GET | Company Admin | List campaigns |
+| `/api/campaigns/:id` | GET | Company Admin | Campaign details |
+| `/api/campaigns/:id` | PATCH | Company Admin | Update campaign |
+| `/api/campaigns/:id/launch` | POST | Company Admin | Launch campaign |
 
 ---
 
-## 🎬 Workflow Completo
+## 🎬 Complete Workflow
 
-### Scenario: Test Phishing per Team Engineering
+### Scenario: Phishing Test for Engineering Team
 
 ```bash
-# 1. Login come Company Admin
+# 1. Login as Company Admin
 POST /api/auth/sign-in/email
 {"email": "admin@acme.com", "password": "****"}
 
-# 2. Aggiungi 5 developer come target
+# 2. Add 5 developers as targets
 POST /api/targets × 5
-# Include LinkedIn URL per ognuno
+# Include LinkedIn URL for each
 
-# 3. Scraping automatico profili
+# 3. Automatic profile scraping
 POST /api/scraping/linkedin × 5
-# Attendi completamento (30-60s per profilo)
+# Wait for completion (30-60s per profile)
 
-# 4. Crea campagna "Password Reset"
+# 4. Create "Password Reset" campaign
 POST /api/campaigns
 {
   "nome": "Engineering Team - Password Test",
   "targetIds": ["dev1", "dev2", "dev3", "dev4", "dev5"],
   "campaignType": "password_reset"
 }
-# AI genera 5 messaggi personalizzati
+# AI generates 5 personalized messages
 
-# 5. Review messaggi (opzionale)
+# 5. Review messages (optional)
 GET /api/campaigns/{id}
-# Verifica messaggi generati
+# Verify generated messages
 
-# 6. Lancia campagna
+# 6. Launch campaign
 POST /api/campaigns/{id}/launch
-# Simula invio immediate email
+# Simulate immediate email sending
 
-# 7. Monitora risultati real-time
+# 7. Monitor real-time results
 GET /api/campaigns/{id}
-# Vedi chi ha cliccato, chi ha inserito credenziali
+# See who clicked, who submitted credentials
 
-# 8. Analizza metriche
+# 8. Analyze metrics
 # Click rate: 60% (3/5)
 # Submit rate: 40% (2/5)
-# → 2 developer necessitano training urgente!
+# → 2 developers need urgent training!
 ```
 
 ---
 
-## 🔒 Sicurezza & Privacy
+## 🔒 Security & Privacy
 
-### Conformità GDPR
+### GDPR Compliance
 
-✅ Solo dati **pubblicamente disponibili** (LinkedIn)  
-✅ **No password** o credenziali reali salvate  
-✅ **Soft delete** con retention policy  
-✅ **Consenso** dell'azienda cliente (contratto)  
-✅ **Anonimizzazione** opzionale risultati  
+✅ Only **publicly available** data (LinkedIn)  
+✅ **No passwords** or real credentials saved  
+✅ **Soft delete** with retention policy  
+✅ Client company **consent** (contract)  
+✅ Optional results **anonymization**  
 
 ### Best Practices
 
-- Usa **HTTPS** in produzione
-- Ruota **BETTER_AUTH_SECRET** regolarmente
-- **Rate limiting** su API pubbliche
-- **Backup** database giornaliero
-- **Audit logging** di operazioni sensibili
+- Use **HTTPS** in production
+- Rotate **BETTER_AUTH_SECRET** regularly
+- **Rate limiting** on public APIs
+- Daily **database backups**
+- **Audit logging** for sensitive operations
 
-### Etica
+### Ethics
 
-Fortify è uno strumento **educativo**. Utilizzo consentito **solo**:
+Fortify is an **educational** tool. Authorized use **only**:
 
-- ✅ Con consenso esplicito organizzazione
-- ✅ Per scopi di training e awareness
-- ✅ In ambienti controllati e autorizzati
-- ❌ **NON** per attacchi reali o illegali
+- ✅ With explicit organization consent
+- ✅ For training and awareness purposes
+- ✅ In controlled and authorized environments
+- ❌ **NOT** for real or illegal attacks
 
 ---
 
 ## 🗺 Roadmap
 
-### ✅ Fase 1 - Backend (Completato)
-- [x] Database schema completo
-- [x] API RESTful complete
-- [x] LinkedIn scraper con Puppeteer
-- [x] Integrazione Nebius AI
-- [x] Sistema campagne
+### ✅ Phase 1 - Backend (Completed)
+- [x] Complete database schema
+- [x] Full RESTful API
+- [x] LinkedIn scraper with Puppeteer
+- [x] Nebius AI integration
+- [x] Campaign system
 - [x] Multi-tenancy + RBAC
 
-### 🚧 Fase 2 - Frontend (Q1 2025)
-- [ ] Dashboard admin con NuxtUI
-- [ ] Gestione organizzazioni UI
+### 🚧 Phase 2 - Frontend (Q1 2025)
+- [ ] Admin dashboard with NuxtUI
+- [ ] Organization management UI
 - [ ] Target management interface
 - [ ] Campaign builder wizard
 - [ ] Real-time analytics charts
-- [ ] Report generator PDF
+- [ ] PDF report generator
 
-### 🔮 Fase 3 - Advanced Features (Q2 2025)
-- [ ] Email invio reale (SendGrid/AWS SES)
+### 🔮 Phase 3 - Advanced Features (Q2 2025)
+- [ ] Real email sending (SendGrid/AWS SES)
 - [ ] SMS phishing (Twilio)
-- [ ] Template editor personalizzati
+- [ ] Custom template editor
 - [ ] Machine learning risk scoring
 - [ ] Webhook notifications
-- [ ] API pubblica per integrazioni
+- [ ] Public API for integrations
 
-### 🌐 Fase 4 - Enterprise (Q3 2025)
+### 🌐 Phase 4 - Enterprise (Q3 2025)
 - [ ] White-label solution
 - [ ] Multi-language support
 - [ ] SSO integration (SAML, OAuth)
@@ -469,15 +469,15 @@ Fortify è uno strumento **educativo**. Utilizzo consentito **solo**:
 
 ---
 
-## 🤝 Contribuire
+## 🤝 Contributing
 
-Contributi benvenuti! Per favore:
+Contributions welcome! Please:
 
-1. Fai fork del repository
-2. Crea un branch: `git checkout -b feature/amazing-feature`
+1. Fork the repository
+2. Create a branch: `git checkout -b feature/amazing-feature`
 3. Commit: `git commit -m 'Add amazing feature'`
 4. Push: `git push origin feature/amazing-feature`
-5. Apri una Pull Request
+5. Open a Pull Request
 
 ### Coding Standards
 
@@ -488,27 +488,27 @@ Contributi benvenuti! Per favore:
 
 ---
 
-## 📄 Licenza
+## 📄 License
 
-Questo progetto è sviluppato per scopi **educativi e di ricerca** nell'ambito universitario.
+This project is developed for **educational and research** purposes within the university context.
 
-**© 2025 Università - Progetto Fortify**
+**© 2025 University - Fortify Project**
 
 ---
 
-## 📞 Supporto
+## 📞 Support
 
-Per domande, bug o feature request:
+For questions, bugs, or feature requests:
 
-- 📧 Email: [email del team]
-- 💬 Discord: [link server]
+- 📧 Email: [team email]
+- 💬 Discord: [server link]
 - 🐛 Issues: [GitHub Issues]
 
 ---
 
-## 🙏 Ringraziamenti
+## 🙏 Acknowledgments
 
-- **Nuxt Team** - Framework incredibile
+- **Nuxt Team** - Amazing framework
 - **Nebius AI** - Llama 70B access
 - **Drizzle Team** - Best ORM ever
 - **Better Auth** - Modern auth solution
@@ -518,10 +518,10 @@ Per domande, bug o feature request:
 
 <div align="center">
 
-### ⭐ Se Fortify ti è utile, lascia una stella!
+### ⭐ If Fortify is useful to you, give it a star!
 
-**Costruito con ❤️ per rendere il web più sicuro**
+**Built with ❤️ to make the web safer**
 
-[⬆️ Torna su](#-fortify)
+[⬆️ Back to top](#-fortify)
 
 </div>
