@@ -501,7 +501,7 @@ This project is developed for **educational and research** purposes within the u
         <sub><b>Mattia Guariglia</b></sub>
       </a><br />
       <sub>@mattyx97</sub><br />
-      💻 🎨 📖
+      💻 🎨 🔬
     </td>
     <td align="center">
       <a href="https://github.com/cerella17">
@@ -509,24 +509,14 @@ This project is developed for **educational and research** purposes within the u
         <sub><b>Giuseppe Cerella</b></sub>
       </a><br />
       <sub>@cerella17</sub><br />
-      💻 🔬 📊
+      💻 📖 📊
     </td>
   </tr>
 </table>
 
 *💻 Code · 🎨 Design · 📖 Documentation · 🔬 Research · 📊 Data Analysis*
 
----
 
-## 📞 Support
-
-For questions, bugs, or feature requests:
-
-- 📧 Email: [team email]
-- 💬 Discord: [server link]
-- 🐛 Issues: [GitHub Issues]
-
----
 
 ## 🙏 Acknowledgments
 
