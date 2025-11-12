@@ -35,6 +35,7 @@
 - [Roadmap](#-roadmap)
 - [Contributing](#-contributing)
 - [License](#-license)
+- [Authors](#-authors)
 
 ---
 
@@ -459,13 +460,7 @@ Fortify is an **educational** tool. Authorized use **only**:
 - [ ] Webhook notifications
 - [ ] Public API for integrations
 
-### 🌐 Phase 4 - Enterprise (Q3 2025)
-- [ ] White-label solution
-- [ ] Multi-language support
-- [ ] SSO integration (SAML, OAuth)
-- [ ] Advanced reporting (BI tools)
-- [ ] Mobile app (React Native)
-- [ ] Compliance certifications
+
 
 ---
 
@@ -493,6 +488,33 @@ Contributions welcome! Please:
 This project is developed for **educational and research** purposes within the university context.
 
 **© 2025 University - Fortify Project**
+
+---
+
+## 👥 Authors
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/mattyx97">
+        <img src="https://github.com/mattyx97.png" width="100px;" alt="Mattia Guariglia"/><br />
+        <sub><b>Mattia Guariglia</b></sub>
+      </a><br />
+      <sub>@mattyx97</sub><br />
+      💻 🎨 📖
+    </td>
+    <td align="center">
+      <a href="https://github.com/cerella17">
+        <img src="https://github.com/cerella17.png" width="100px;" alt="Giuseppe Cerella"/><br />
+        <sub><b>Giuseppe Cerella</b></sub>
+      </a><br />
+      <sub>@cerella17</sub><br />
+      💻 🔬 📊
+    </td>
+  </tr>
+</table>
+
+*💻 Code · 🎨 Design · 📖 Documentation · 🔬 Research · 📊 Data Analysis*
 
 ---
 
