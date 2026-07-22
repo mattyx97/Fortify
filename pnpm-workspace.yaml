@@ -1,0 +1,16 @@
+# Flat (npm-style) layout. Required so Mastra's npm-aliased AI SDK deps
+# (e.g. "@ai-sdk/provider-utils-v5": "npm:@ai-sdk/provider-utils@3.0.20") are
+# materialized as real top-level directories under their aliased names. In the
+# default isolated layout they are only symlinks, so Nitro's dependency tracer
+# copies them into .output under their real names and the aliased import
+# specifiers fail at runtime with ERR_MODULE_NOT_FOUND.
+nodeLinker: hoisted
+
+allowBuilds:
+  '@parcel/watcher': true
+  esbuild: true
+  protobufjs: true
+  rebrowser-puppeteer: true
+  sharp: true
+  unrs-resolver: true
+  vue-demi: true

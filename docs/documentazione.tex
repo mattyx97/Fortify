@@ -1,0 +1,737 @@
+%=====================================================================
+%  Fortify - AI-Powered Social Engineering Simulation Framework
+%  Documentazione di progetto - Universita degli Studi di Salerno
+%  Compilabile con Tectonic/XeLaTeX oppure pdfLaTeX (Overleaf).
+%=====================================================================
+\documentclass[12pt,a4paper,oneside]{report}
+
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+\fi
+\usepackage[italian]{babel}
+\usepackage{amsmath}
+\usepackage[a4paper,margin=3cm]{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning,calc,fit,backgrounds}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{caption}
+\usepackage[hidelinks]{hyperref}
+
+%--------------------------------------------------- colori
+\definecolor{fortifyblue}{HTML}{1E3A8A}
+\definecolor{codebg}{HTML}{F5F6F8}
+\definecolor{codeframe}{HTML}{D9DEE7}
+\definecolor{kw}{HTML}{0B5FA5}
+\definecolor{str}{HTML}{1B7F3B}
+\definecolor{cmt}{HTML}{7A7A7A}
+\definecolor{boxblue}{HTML}{E7ECF7}
+\definecolor{boxline}{HTML}{9FB1D6}
+
+%--------------------------------------------------- listings
+\lstdefinestyle{code}{
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{kw}\bfseries,
+  stringstyle=\color{str},
+  commentstyle=\color{cmt}\itshape,
+  numbers=none,
+  frame=single,
+  rulecolor=\color{codeframe},
+  breaklines=true,
+  showstringspaces=false,
+  columns=fullflexible,
+  keepspaces=true,
+  tabsize=2,
+  captionpos=b,
+}
+\lstset{style=code}
+
+%--------------------------------------------------- header/footer
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Fortify}
+\fancyhead[R]{\small\itshape\leftmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\setlength{\headheight}{15pt}
+
+\titleformat{\chapter}[hang]{\Huge\bfseries\color{fortifyblue}}{\thechapter\quad}{0pt}{}
+\titlespacing*{\chapter}{0pt}{10pt}{20pt}
+
+\newcommand{\code}[1]{\texttt{\small #1}}
+
+\hypersetup{pdftitle={Fortify - AI-Powered Social Engineering Simulation Framework},pdfauthor={Orlando Sica, Mattia Guariglia}}
+
+\begin{document}
+
+%=====================================================================
+% FRONTESPIZIO
+%=====================================================================
+\begin{titlepage}
+\centering
+{\Large Universit\`a degli Studi di Salerno\par}
+\vspace{2pt}
+{\large Dipartimento di Informatica\par}
+\vspace{6pt}
+\rule{\textwidth}{0.6pt}\par
+\vspace{12pt}
+\includegraphics[width=0.28\textwidth]{img/logo-unisa.png}\par
+\vspace{14pt}
+{\large Documentazione di Progetto\par}
+\vspace{40pt}
+{\fontsize{52}{56}\selectfont\bfseries\color{fortifyblue} Fortify\par}
+\vspace{14pt}
+{\Large AI-Powered Social Engineering\\[2pt] Simulation Framework\par}
+\vspace{60pt}
+
+\begin{minipage}{0.48\textwidth}
+\raggedright
+\large
+Orlando Sica\\
+Mattia Guariglia
+\end{minipage}\hfill
+\begin{minipage}{0.48\textwidth}
+\raggedleft
+\large
+\textbf{Candidati}\\
+Mat. 0522502033\\
+Mat. 0522502034
+\end{minipage}
+
+\vfill
+\rule{\textwidth}{0.6pt}\par
+\vspace{6pt}
+{\large Anno Accademico 2025/2026\par}
+\end{titlepage}
+
+%=====================================================================
+% SOMMARIO
+%=====================================================================
+\chapter*{Sommario}
+\addcontentsline{toc}{chapter}{Sommario}
+\markboth{Sommario}{Sommario}
+
+\textbf{Fortify} \`e una piattaforma \emph{enterprise} per la simulazione controllata
+di campagne di \emph{social engineering} (phishing ed \emph{smishing}), progettata
+per valutare e migliorare il livello di consapevolezza di sicurezza degli utenti
+all'interno di un'organizzazione. L'idea di base \`e trasformare l'attacco di
+ingegneria sociale in un ``laboratorio controllato'': l'organizzazione definisce il
+perimetro (aziende, dipendenti-bersaglio, tipologia di campagna), il sistema raccoglie
+automaticamente informazioni pubbliche sui target tramite tecniche di OSINT, genera con
+un modello linguistico di grandi dimensioni contenuti malevoli \emph{simulati} e
+altamente personalizzati, li veicola verso i destinatari e misura il comportamento reale
+delle persone lungo l'intero ciclo di vita dell'attacco. Al termine, Fortify produce
+metriche e report strutturati che consentono di identificare i punti deboli e pianificare
+azioni di formazione mirata.
+
+Il framework \`e realizzato con uno stack TypeScript moderno e full-stack
+(Nuxt~4, Drizzle ORM, PostgreSQL), integra la personalizzazione dei contenuti tramite
+il modello \emph{Google Gemini} orchestrato dal framework Mastra, e sfrutta un motore di
+\emph{scraping} basato su browser headless per la fase di raccolta OSINT. L'intera
+architettura \`e progettata nel rispetto di rigorosi standard etici e di privacy,
+lavorando esclusivamente con dati pubblici, credenziali simulate e simulazioni
+controllate prive di reale compromissione.
+
+Questo documento descrive l'architettura del sistema, le scelte tecnologiche, i dettagli
+implementativi di ciascun componente, la campagna di testing e validazione condotta
+end-to-end, i risultati ottenuti e le limitazioni note con i relativi sviluppi futuri.
+
+%=====================================================================
+% INDICI
+%=====================================================================
+\tableofcontents
+\listoffigures
+\listoftables
+\clearpage
+
+%=====================================================================
+% CAP 1 - INTRODUZIONE
+%=====================================================================
+\chapter{Introduzione}
+
+\section{Contesto e motivazione}
+La stragrande maggioranza degli incidenti di sicurezza ha origine da un fattore umano:
+un dipendente che clicca su un link malevolo, apre un allegato o inserisce le proprie
+credenziali su una pagina contraffatta. Nessuna difesa perimetrale \`e in grado di
+neutralizzare completamente questo vettore, perch\'e il bersaglio non \`e un sistema ma
+una persona. Per questo motivo la \emph{security awareness} \`e diventata una componente
+essenziale della postura di sicurezza di ogni organizzazione, e la simulazione controllata
+di attacchi di social engineering rappresenta lo strumento pi\`u efficace per misurarla.
+
+Le piattaforme tradizionali di \emph{phishing simulation} inviano tuttavia messaggi
+generici, uguali per tutti i destinatari. Fortify parte dall'osservazione che gli attacchi
+reali pi\`u pericolosi sono quelli \emph{mirati} (spear phishing): messaggi costruiti su
+misura a partire da informazioni pubbliche relative alla vittima. Il progetto ha quindi
+l'obiettivo di riprodurre in modo etico questa capacit\`a, combinando raccolta OSINT
+automatizzata e generazione di contenuti tramite intelligenza artificiale.
+
+\section{Obiettivi del progetto}
+Gli obiettivi funzionali del sistema sono:
+\begin{itemize}[nosep]
+  \item raccogliere e normalizzare informazioni pubbliche sui bersagli (LinkedIn, GitHub,
+        siti web personali) in profili strutturati;
+  \item generare campagne di phishing simulato personalizzate per singolo destinatario
+        sfruttando un modello linguistico di grandi dimensioni;
+  \item veicolare le campagne tramite canali multipli (e-mail e SMS) mantenendo la
+        tracciabilit\`a di ogni singola comunicazione;
+  \item tracciare in modo granulare le interazioni degli utenti (apertura, click,
+        inserimento credenziali, esecuzione di allegati);
+  \item produrre report di rischio con metriche, individui ad alto rischio e
+        raccomandazioni formative;
+  \item garantire l'isolamento multi-tenant tra organizzazioni diverse.
+\end{itemize}
+
+\section{Considerazioni etiche e legali}
+Fortify \`e uno strumento a duplice uso e la sua legittimit\`a dipende dal contesto d'impiego.
+L'intero progetto \`e stato concepito per l'uso \emph{difensivo} in scenari autorizzati
+(security awareness aziendale, esercitazioni interne, penetration testing su perimetro
+concordato). Sono adottate le seguenti garanzie:
+\begin{itemize}[nosep]
+  \item vengono raccolti esclusivamente dati \emph{pubblici}; nessuna informazione personale
+        viene compromessa senza consenso;
+  \item le pagine di login simulate non memorizzano credenziali reali di sistemi di
+        produzione: i dati inseriti sono registrati unicamente a fini di reportistica e
+        di rimozione della vulnerabilit\`a;
+  \item gli allegati con payload sono generati in ambiente controllato e non causano alcun
+        danno reale ai sistemi;
+  \item la portata di ogni campagna \`e limitata ai soggetti autorizzati definiti dal
+        \emph{Company Admin}.
+\end{itemize}
+
+\section{Struttura del documento}
+Il Capitolo~2 descrive l'architettura del sistema e i flussi tra i componenti; il
+Capitolo~3 motiva le scelte tecnologiche; il Capitolo~4 approfondisce l'implementazione di
+ciascun modulo; il Capitolo~5 riporta la campagna di testing e validazione end-to-end; il
+Capitolo~6 discute i risultati; il Capitolo~7 elenca le limitazioni note e gli sviluppi
+futuri; il Capitolo~8 conclude.
+
+\section{Nota sul gruppo di lavoro}
+Il progetto \`e stato inizialmente pianificato per un gruppo di tre studenti. In seguito
+al ritiro di un componente, lo sviluppo \`e proseguito con due membri. Di conseguenza,
+alcune funzionalit\`a previste in fase di analisi sono state deliberatamente ridotte di
+portata o rimandate a sviluppi futuri; tali scelte sono documentate esplicitamente nel
+Capitolo~7.
+
+%=====================================================================
+% CAP 2 - ARCHITETTURA
+%=====================================================================
+\chapter{Architettura del Sistema}
+
+\section{Visione d'insieme}
+Il sistema \`e organizzato come applicazione full-stack con backend a API REST
+\emph{stateless} e frontend a dashboard interattiva. Il flusso operativo principale parte
+da una o pi\`u organizzazioni e dai relativi \emph{employee target} inseriti dai
+\emph{Company Admin}. Ogni target \`e descritto da un profilo di base (nome, e-mail, ruolo,
+dipartimento) opzionalmente arricchito da riferimenti a profili pubblici.
+
+La prima fase \`e la raccolta e l'arricchimento OSINT: un modulo di scraping automatizzato,
+schedulato periodicamente, estrae dati rilevanti dai profili pubblici e li normalizza nel
+database. Su questa base il Company Admin crea una o pi\`u campagne, associando un insieme
+di target a una tipologia di scenario (password reset, finta fattura, CEO fraud). Al lancio,
+il backend invoca il modulo di personalizzazione AI che, combinando template, dati OSINT e
+metadati organizzativi, genera per ciascun destinatario un messaggio credibile e
+differenziato. Il \emph{Campaign Launcher} veicola i messaggi mantenendo identificatori
+univoci per link e payload. Durante e dopo il lancio, il \emph{Interaction Logger} registra
+ogni evento; infine il \emph{Risk Report Generator} aggrega i dati in metriche e report.
+
+\section{Componenti principali}
+L'architettura \`e modulare e organizzata in sette componenti logici.
+
+\begin{description}[style=nextline,leftmargin=0pt]
+  \item[Dashboard] Punto di ingresso per l'amministratore: consente di configurare
+    organizzazioni, target e campagne e di visualizzare in modo centralizzato metriche e
+    risultati delle simulazioni.
+  \item[Target Information Collector] Raccoglie dati pubblici tramite tecniche di OSINT
+    (scraping di LinkedIn e GitHub con browser headless, analisi di siti web) e produce una
+    rappresentazione strutturata e storicizzata del target.
+  \item[Phishing Campaign Generator] Combina i profili con template di campagna predefiniti,
+    selezionando lo scenario pi\`u adatto e impostando i \emph{placeholder} che il modello
+    linguistico andr\`a a risolvere.
+  \item[NLP Text Personalizer] Prende in input gli ``scheletri'' dei messaggi e, tramite un
+    modello linguistico di grandi dimensioni, genera testi naturali e contestualizzati per
+    ciascun destinatario, adattando tono, lingua e livello di formalit\`a.
+  \item[Campaign Launcher] Gestisce la distribuzione dei messaggi tramite i canali configurati
+    (e-mail e SMS), l'assemblaggio dei contenuti con il tracciamento e l'eventuale
+    allegato con payload controllato.
+  \item[Interaction Logger] Intercetta e registra tutte le azioni compiute dai destinatari
+    (apertura, click, compilazione di form, esecuzione di allegati),
+    associando ogni evento a campagna, target e messaggio.
+  \item[Risk Report Generator] Elabora i dati prodotti dal logger calcolando indicatori
+    chiave (tasso di apertura, \emph{click-through rate}, \emph{submission rate}),
+    individua i reparti pi\`u vulnerabili e produce report esportabili.
+\end{description}
+
+\section{Component diagram}
+La Figura~\ref{fig:component} rappresenta i componenti e i flussi di dati principali.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  node distance=8mm,
+  box/.style={draw=boxline,fill=boxblue,rounded corners=3pt,minimum width=5.2cm,minimum height=8mm,align=center,font=\small},
+  every path/.style={-{Stealth[length=2.4mm]},thick,draw=fortifyblue}]
+  \node[box] (dash) {Dashboard};
+  \node[box,below=of dash] (coll) {Target Information Collector};
+  \node[box,below=of coll] (gen) {Phishing Campaign Generator};
+  \node[box,below=of gen] (nlp) {NLP Text Personalizer};
+  \node[box,below=of nlp] (launch) {Campaign Launcher};
+  \node[box,below=of launch] (log) {Interaction Logger};
+  \node[box,below=of log] (report) {Risk Report Generator};
+  \draw (dash) -- (coll);
+  \draw (coll) -- (gen);
+  \draw ([xshift=-6mm]gen.south) -- ([xshift=-6mm]nlp.north);
+  \draw ([xshift=6mm]nlp.north) -- ([xshift=6mm]gen.south);
+  \draw (nlp) -- (launch);
+  \draw (launch) -- (log);
+  \draw (log) -- (report);
+  \draw[dashed] (report.east) -- ++(2.2cm,0) |- (dash.east);
+\end{tikzpicture}
+\caption{Component diagram: architettura modulare e flussi di dati.}
+\label{fig:component}
+\end{figure}
+
+Il \emph{NLP Text Personalizer} fornisce inoltre un ciclo di \emph{feedback} verso il
+\emph{Phishing Campaign Generator} per il raffinamento iterativo dei template, mentre il
+\emph{Risk Report Generator} chiude il ciclo alimentando la \emph{Dashboard}.
+
+\section{Sequence diagram}
+La Figura~\ref{fig:sequence} illustra la sequenza temporale di un'esecuzione tipica.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[font=\scriptsize,>=Stealth]
+  \def\actors{Admin/0, Dashboard/2.2, Collector/4.4, Generator/6.6, Personalizer/8.8, Launcher/11, Logger/13.2, Report/15.4}
+  \foreach \name/\x in \actors {
+    \node[draw=boxline,fill=boxblue,rounded corners=2pt,minimum width=1.7cm,font=\scriptsize] (\name) at (\x,0) {\name};
+    \draw[dashed,gray] (\name.south) -- ++(0,-9.2);
+  }
+  \newcommand{\msg}[4]{\draw[->] ($(#1)+(0,#3)$) -- node[above,font=\tiny]{#4} ($(#2)+(0,#3)$);}
+  \msg{Admin}{Dashboard}{-0.7}{crea org + target}
+  \msg{Dashboard}{Collector}{-1.5}{avvia scraping}
+  \draw[->] ($(Collector)+(0,-2.3)$) -- ++(0.7,0) -- ++(0,-0.4) -- node[right,font=\tiny]{OSINT}++(-0.7,0);
+  \msg{Collector}{Generator}{-3.1}{profili arricchiti}
+  \msg{Generator}{Personalizer}{-3.9}{template + placeholder}
+  \draw[->] ($(Personalizer)+(0,-4.7)$) -- ++(0.7,0) -- ++(0,-0.4) -- node[right,font=\tiny]{Gemini}++(-0.7,0);
+  \msg{Personalizer}{Launcher}{-5.5}{messaggi personalizzati}
+  \msg{Launcher}{Logger}{-6.3}{invio + tracking id}
+  \msg{Logger}{Report}{-7.1}{eventi interazione}
+  \msg{Report}{Admin}{-8.5}{report + metriche}
+\end{tikzpicture}
+\caption{Sequence diagram del flusso operativo end-to-end.}
+\label{fig:sequence}
+\end{figure}
+
+\section{Modello dei dati}
+Il modello relazionale \`e riportato in forma sintetica nella Tabella~\ref{tab:schema}.
+Tutte le colonne di chiave esterna sono indicizzate per garantire prestazioni ottimali
+alle query relazionali. Gli identificatori primari sono UUID (versione 7) generati dal
+database.
+
+\begin{table}[h]
+\centering
+\caption{Tabelle principali del modello dati.}
+\label{tab:schema}
+\small
+\begin{tabular}{@{}p{4.2cm}p{9.2cm}@{}}
+\toprule
+\textbf{Tabella} & \textbf{Descrizione} \\
+\midrule
+\code{organization} & Organizzazione (tenant) oggetto della simulazione. \\
+\code{organization\_member} & Associazione tra utente e organizzazione con ruolo (\emph{company\_admin}, \emph{analyst}). \\
+\code{users} + tabelle auth & Utenti e sessioni gestiti da Better Auth. \\
+\code{employee\_target} & Dipendente-bersaglio (dati base, telefono, sito web, stato scraping sito). \\
+\code{employee\_social\_profile} & Profilo social del target (piattaforma, URL, stato scraping). \\
+\code{employee\_scraping\_result} & Risultato storicizzato di uno scraping (JSON tipizzato). \\
+\code{campaign\_template} & Template di campagna con configurazione JSON di landing page e allegato. \\
+\code{phishing\_campaign} & Campagna di phishing (stato: \emph{draft}, \emph{active}, \emph{completed}). \\
+\code{campaign\_target} & Associazione tra campagna e target con contenuto personalizzato e timestamp di invio. \\
+\code{interaction\_log} & Evento di interazione con metadati JSON tipizzati per tipo di evento. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%=====================================================================
+% CAP 3 - SCELTE TECNOLOGICHE
+%=====================================================================
+\chapter{Scelte Tecnologiche}
+Lo stack \`e stato scelto per garantire \emph{type-safety} end-to-end, rapidit\`a di
+sviluppo e sicurezza in ottica multi-tenant.
+
+\section{Frontend}
+\begin{itemize}[nosep]
+  \item \textbf{Nuxt 4} (Vue 3): framework full-stack che combina rendering lato server e
+        SPA, ideale per dashboard interattive e performanti.
+  \item \textbf{Nuxt UI v4}: libreria di componenti accessibili con design pulito e coerente
+        per amministratori e analisti.
+  \item \textbf{Tailwind CSS v4}: styling \emph{utility-first} per prototipazione rapida e
+        controllo fine del layout.
+  \item \textbf{TanStack Query}: gestione dichiarativa di data-fetching, cache e
+        invalidazione lato client.
+\end{itemize}
+
+\section{Backend}
+\begin{itemize}[nosep]
+  \item \textbf{Nuxt Server (Nitro)}: layer server-side per esporre endpoint HTTP con
+        architettura full-stack omogenea in TypeScript.
+  \item \textbf{Better Auth}: autenticazione moderna (e-mail/password, sessioni via cookie,
+        ID UUID) con gestione di ruoli e controllo degli accessi.
+  \item \textbf{Drizzle ORM} (Relational Queries v2): toolkit type-safe per l'accesso al
+        database con schema definito in TypeScript.
+  \item \textbf{PostgreSQL}: database relazionale affidabile, con supporto a tipi enumerati
+        e colonne JSONB per i metadati.
+\end{itemize}
+
+\section{Intelligenza artificiale e scraping}
+\begin{itemize}[nosep]
+  \item \textbf{Google Gemini} (modello \code{gemini-2.5-flash}), orchestrato dal framework
+        \textbf{Mastra}: genera i messaggi di phishing personalizzati a partire da template
+        e profili OSINT. \emph{Nota}: rispetto all'analisi iniziale, che ipotizzava l'uso di
+        un modello Llama tramite provider esterno, l'implementazione definitiva adotta
+        Google Gemini per stabilit\`a, qualit\`a e disponibilit\`a.
+  \item \textbf{rebrowser-puppeteer}: motore di automazione di browser headless per lo
+        scraping controllato di profili LinkedIn e GitHub, simulando la navigazione di un
+        utente reale.
+  \item \textbf{cheerio + DNS/WHOIS}: analisi dei siti web personali via richieste HTTP
+        (estrazione di contenuti, link, tecnologie, record DNS e WHOIS), con \emph{guard}
+        anti-SSRF.
+\end{itemize}
+
+\section{Payload e simulazione di compromissione}
+Per simulare scenari di compromissione tramite allegati in ambiente controllato \`e prevista
+l'integrazione con un framework di \emph{command and control} (Sliver): all'apertura
+dell'allegato, il payload effettua una \emph{callback} verso il backend, permettendo di
+tracciare quali utenti hanno eseguito il file senza causare alcun danno reale.
+
+\section{DevOps e qualit\`a del codice}
+\begin{itemize}[nosep]
+  \item \textbf{pnpm}: package manager efficiente per la gestione delle dipendenze.
+  \item \textbf{Docker Compose}: orchestrazione dell'infrastruttura di sviluppo
+        (PostgreSQL, storage S3-compatibile, server SMTP di test).
+  \item \textbf{Drizzle Kit}: gestione delle migrazioni, applicate automaticamente all'avvio.
+  \item \textbf{TypeScript}: linguaggio principale, per type-safety end-to-end.
+\end{itemize}
+
+%=====================================================================
+% CAP 4 - IMPLEMENTAZIONE
+%=====================================================================
+\chapter{Implementazione}
+
+\section{Architettura a livelli del backend}
+Il backend segue un'architettura a livelli con responsabilit\`a nette, in cui ogni livello
+invoca solo quello sottostante (Figura~\ref{fig:layers}):
+\begin{itemize}[nosep]
+  \item \code{api/}: livello degli \emph{handler} HTTP, responsabile di validazione (Zod),
+        autenticazione, autorizzazione e instradamento verso i servizi;
+  \item \code{services/}: logica di business, ossia regole di dominio, orchestrazione ed
+        effetti collaterali;
+  \item \code{lib/}: configurazione delle librerie esterne (funzioni \code{setupXXX});
+  \item \code{utils/}: i \emph{composable} \code{useXXX} che forniscono le istanze
+        infrastrutturali con caching pigro.
+\end{itemize}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[layer/.style={draw=boxline,fill=boxblue,rounded corners=3pt,minimum width=11cm,minimum height=9mm,align=center,font=\small},node distance=4mm]
+  \node[layer] (a) {\textbf{api/} \; validazione $\cdot$ auth $\cdot$ autorizzazione};
+  \node[layer,below=of a] (s) {\textbf{services/} \; logica di business $\cdot$ query Drizzle};
+  \node[layer,below=of s] (u) {\textbf{utils/} \; \code{useXXX()} istanze infrastrutturali};
+  \node[layer,below=of u] (l) {\textbf{lib/} \; \code{setupXXX()} configurazione librerie};
+  \draw[-{Stealth},thick,fortifyblue] (a)--(s);
+  \draw[-{Stealth},thick,fortifyblue] (s)--(u);
+  \draw[-{Stealth},thick,fortifyblue] (u)--(l);
+\end{tikzpicture}
+\caption{Architettura a livelli del backend.}
+\label{fig:layers}
+\end{figure}
+
+\section{Autenticazione e multi-tenancy}
+L'autenticazione \`e delegata a Better Auth (e-mail/password con \emph{auto sign-in}).
+Ogni \emph{handler} scoped su organizzazione recupera l'appartenenza del chiamante, esegue
+una \emph{ability} di autorizzazione e poi invoca un servizio la cui query \`e vincolata
+all'\code{organizationId}: in questo modo l'isolamento tra tenant \`e garantito e gli accessi
+cross-organizzazione sono negati. Alla creazione di un'organizzazione, il creatore diventa
+\emph{company\_admin}, vengono inseriti quattro template di default e caricati i relativi
+allegati su storage S3.
+
+\section{Target Information Collector (OSINT)}
+Il modulo dati distingue \code{employee\_target} (persona e campi HR, con un blocco
+denormalizzato per il sito web) da \code{employee\_social\_profile} (profilo social con
+stato di scraping) e \code{employee\_scraping\_result} (storico dei risultati in JSON
+tipizzato). L'attivazione dello scraping non avviene in linea: l'endpoint marca i profili
+come \emph{pending}, mentre un \emph{task} schedulato ogni 10 secondi processa la coda.
+
+Lo scraper LinkedIn/GitHub \`e basato su \code{rebrowser-puppeteer} e utilizza un'istanza
+di Chrome headless con eventuale iniezione di cookie di sessione. Lo scraping dei siti web
+usa invece \code{fetch}+\code{cheerio} con \emph{guard} anti-SSRF (blocco di URL con
+credenziali, host locali e indirizzi IP privati/loopback), estrazione di titolo,
+descrizione, sezioni, link classificati (e-mail, GitHub, LinkedIn), \emph{fingerprint}
+tecnologico e record DNS/WHOIS.
+
+\begin{lstlisting}[language=,caption={Struttura tipizzata di un risultato di scraping GitHub.}]
+interface GitHubScrapingData {
+  platform: 'github'
+  username: string | null
+  fullName: string | null
+  company: string | null
+  location: string | null
+  followers: number | null
+  repositories: GitHubRepoScraped[]  // nome, linguaggio, stelle, README, contributori
+  pinnedRepos: string[]
+}
+\end{lstlisting}
+
+\section{Phishing Campaign Generator}
+I template sono memorizzati nella tabella \code{campaign\_template} con due configurazioni
+JSON tipizzate: \code{landingPageConfig} (titolo, colore, campi del form, URL di redirect)
+e \code{attachmentConfig} (nome file, tipo, percorso su storage). Ogni organizzazione riceve
+quattro template predefiniti: \emph{Password Reset}, \emph{Invoice Payment} (con allegato PDF),
+\emph{CEO Urgent Request} e \emph{SMS Verification}. Il corpo dei messaggi supporta
+\emph{placeholder} con doppie parentesi graffe, che possono essere sia riferimenti a campi
+noti sia istruzioni in linguaggio naturale per il modello.
+
+\section{NLP Text Personalizer}
+La personalizzazione \`e affidata a un \emph{agent} Mastra configurato sul modello
+\code{gemini-2.5-flash} tramite il \emph{provider} nativo Google. Al lancio, per ciascun
+target vengono compilati i dati OSINT (LinkedIn, GitHub, sito) in un blocco testuale e
+inseriti, insieme a template e metadati HR, in un \emph{prompt} specifico per canale
+(e-mail o SMS). Il prompt contiene regole dettagliate su come interpretare l'OSINT
+(distinguere il ruolo attuale dai progetti personali, usare l'OSINT per scegliere dettagli
+credibili e non come argomento del messaggio) e vincola l'output a un oggetto JSON.
+
+\begin{lstlisting}[language=,caption={Configurazione del \emph{provider} nativo Google (estratto).}]
+// Il bridge della chiave verso GOOGLE_GENERATIVE_AI_API_KEY consente al
+// provider nativo di autenticarsi; l'uso della stringa "google/<model>"
+// evita l'instradamento verso il gateway (che, privo di chiave, si blocca).
+model: 'google/gemini-2.5-flash'
+\end{lstlisting}
+
+\section{Campaign Launcher}
+Il lancio imposta immediatamente lo stato della campagna a \emph{active} e avvia un
+\emph{task} di background che, per ciascun target: recupera l'OSINT, invoca la
+personalizzazione, salva il contenuto personalizzato, assembla il messaggio finale
+iniettando il tracciamento (pixel e link con UUID) e l'eventuale allegato PDF, e infine
+invia. Il canale e-mail usa SMTP, mentre il canale SMS produce una simulazione su console
+(nessun gateway reale).
+
+\section{Interaction Logger}
+Tutti gli eventi convergono in un unico servizio \code{logInteraction} che li persiste nella
+tabella \code{interaction\_log} con metadati JSON tipizzati. Gli endpoint di tracciamento
+sono: pixel di apertura (\code{GET /api/track/pixel/:id}), click con redirect
+(\code{GET /api/track/click/:id}), invio del form (\code{POST /api/track/submit/:id}) e
+callback dell'allegato (\code{POST /api/track/attachment/:id}). La pagina di login simulata
+\`e servita da \code{/lp/:id}. Per coerenza, gli eventi vengono ignorati se la campagna \`e
+gi\`a \emph{completed}.
+
+I tipi di evento tracciati sono riportati nella Tabella~\ref{tab:events}.
+
+\begin{table}[h]
+\centering
+\caption{Tipi di evento di interazione.}
+\label{tab:events}
+\small
+\begin{tabular}{@{}p{3.6cm}p{4.2cm}p{5.4cm}@{}}
+\toprule
+\textbf{Evento} & \textbf{Canale} & \textbf{Descrizione} \\
+\midrule
+\code{email\_opened}   & E-mail       & Caricamento del pixel di tracciamento. \\
+\code{link\_clicked}   & E-mail/SMS   & Click sul link con UUID. \\
+\code{form\_submitted} & E-mail/SMS   & Invio credenziali sulla landing page. \\
+\code{payload\_executed} & E-mail     & Callback dell'allegato con payload. \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Risk Report Generator e Dashboard}
+La dashboard di dettaglio della campagna calcola in tempo reale gli indicatori di
+engagement (aperture, click, submission, esecuzione payload, CTR) e mostra un registro
+live delle interazioni con dettaglio per evento, incluse le credenziali catturate. \`E
+inoltre disponibile l'esportazione di un \emph{report di rischio} in formato HTML/PDF, che
+include un punteggio sintetico di suscettibilit\`a, la distribuzione della vulnerabilit\`a
+per dipartimento, l'elenco degli individui ad alto rischio, la \emph{timeline} degli eventi
+e raccomandazioni formative generate dinamicamente in base ai risultati.
+
+%=====================================================================
+% CAP 5 - TESTING
+%=====================================================================
+\chapter{Testing e Validazione}
+
+\section{Ambiente di test}
+La validazione \`e stata condotta in locale con l'infrastruttura Docker di sviluppo
+(PostgreSQL, storage S3-compatibile, server SMTP di test \emph{maildev}) e con una chiave
+Google Gemini valida. Le campagne e-mail sono quindi verificabili end-to-end senza servizi
+esterni a pagamento. Lo scraping LinkedIn (che richiede cookie di sessione aggiornati) \`e
+stato escluso dai test automatici in quanto dipendente da credenziali esterne.
+
+\section{Test end-to-end della campagna e-mail}
+\`E stato eseguito l'intero flusso, dalla registrazione fino al report, guidando
+l'applicazione tramite un browser reale. Il percorso verificato \`e:
+\begin{enumerate}[nosep]
+  \item registrazione utente e login (con verifica dei \emph{guard} di rotta);
+  \item creazione dell'organizzazione (con seeding automatico dei quattro template e
+        caricamento dell'allegato PDF su storage);
+  \item inserimento di un target (ruolo: \emph{IT Infrastructure Manager});
+  \item scraping OSINT del profilo GitHub del target (completato con successo);
+  \item creazione e lancio di una campagna \emph{Password Reset};
+  \item generazione del messaggio personalizzato tramite Gemini e consegna via SMTP;
+  \item apertura dell'e-mail (attivazione del pixel), click sul link, atterraggio sulla
+        landing page e invio delle credenziali;
+  \item visualizzazione delle metriche e delle credenziali catturate nella dashboard.
+\end{enumerate}
+
+Il tracciamento \`e stato inoltre validato in modo \emph{realistico}: il rendering
+dell'e-mail nel client di posta ha attivato autonomamente il pixel (evento
+\code{email\_opened} registrato con \emph{User-Agent} reale del browser), il click sul link
+contenuto nell'e-mail ha generato \code{link\_clicked} e l'invio del form ha prodotto
+\code{form\_submitted} con le credenziali catturate.
+
+\section{Test dei singoli moduli e casi di sicurezza}
+Oltre al flusso principale sono stati verificati: la creazione/modifica/cancellazione dei
+template (inclusa la corretta rimozione di landing page e allegato in fase di modifica), il
+lancio di una campagna con allegato PDF, la simulazione SMS, la cancellazione delle campagne
+(consentita solo in stato \emph{draft}), la gestione dei membri, l'interruzione del
+logging alla chiusura della campagna e l'isolamento multi-tenant. In particolare, il test di
+sicurezza sull'endpoint di lettura delle interazioni ha confermato che una richiesta con
+una campagna non appartenente all'organizzazione restituisce \emph{404}, prevenendo la
+lettura cross-tenant.
+
+\section{Riepilogo dei risultati}
+La Tabella~\ref{tab:tests} riassume l'esito dei test condotti.
+
+\begin{table}[h]
+\centering
+\caption{Riepilogo della campagna di test.}
+\label{tab:tests}
+\small
+\begin{tabular}{@{}p{6.6cm}p{2.4cm}p{4.0cm}@{}}
+\toprule
+\textbf{Funzionalit\`a} & \textbf{Esito} & \textbf{Note} \\
+\midrule
+Autenticazione e guard di rotta & Superato & register/login/logout \\
+Multi-tenancy e isolamento (IDOR) & Superato & cross-tenant $\rightarrow$ 404 \\
+Creazione org + seeding template & Superato & 4 template, PDF su S3 \\
+Scraping OSINT GitHub & Superato & profilo completo \\
+Scraping OSINT sito web & Superato & tecnologie, DNS, WHOIS \\
+Template CRUD + rimozione sezioni & Superato & fix rimozione landing page \\
+Personalizzazione AI (Gemini) & Superato & circa 10-15\,s per target \\
+Consegna e-mail (SMTP) & Superato & recapito su maildev \\
+Campagna con allegato PDF & Superato & PDF allegato ($\sim$49\,KB) \\
+Tracciamento apertura (pixel) & Superato & UA reale del browser \\
+Tracciamento click & Superato & redirect a landing page \\
+Cattura credenziali (form) & Superato & dati mostrati in dashboard \\
+Callback allegato (payload) & Superato & solo via richiesta diretta \\
+Simulazione SMS & Superato & output su console \\
+Report di rischio (HTML/PDF) & Superato & metriche, timeline, raccomandazioni \\
+Scraping LinkedIn & Non testato & richiede cookie di sessione \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%=====================================================================
+% CAP 6 - VALUTAZIONE
+%=====================================================================
+\chapter{Valutazione dei Risultati}
+Il sistema calcola le metriche di efficacia direttamente dai dati di interazione. Le
+principali sono:
+\[
+\text{CTR} = \frac{\text{click}}{\text{e-mail inviate}}\times 100
+\qquad
+\text{Submission rate} = \frac{\text{credenziali inviate}}{\text{click}}\times 100
+\]
+Nel test end-to-end, con un singolo target che ha completato l'intero percorso, la dashboard
+ha riportato tasso di apertura, click e submission pari al 100\%, con il target correttamente
+classificato come individuo ad alto rischio (\emph{Critical}) nel report generato.
+
+Sul piano qualitativo, i messaggi prodotti da Gemini si sono rivelati credibili e coerenti
+con il contesto lavorativo del bersaglio: i \emph{placeholder} sono stati risolti con valori
+reali, i blocchi in linguaggio naturale sono stati trasformati in dettagli concreti (numeri
+di fattura, fornitori plausibili, scadenze) e il tono \`e risultato appropriato allo scenario.
+Rispetto a un template generico, la personalizzazione basata su OSINT aumenta
+significativamente la verosimiglianza del messaggio e, di conseguenza, la validit\`a della
+simulazione come strumento di misura della consapevolezza.
+
+%=====================================================================
+% CAP 7 - LIMITAZIONI
+%=====================================================================
+\chapter{Limitazioni e Sviluppi Futuri}
+Coerentemente con la riduzione del gruppo di lavoro, alcune funzionalit\`a previste in fase
+di analisi sono state ridotte di portata o rimandate. Si riportano di seguito le limitazioni
+note, distinte per criticit\`a.
+
+\section{Funzionalit\`a non implementate (sviluppi futuri)}
+\begin{itemize}[nosep]
+  \item \textbf{Google Dorking}: la ricerca di documenti esposti tramite \emph{dork} non \`e
+        implementata.
+  \item \textbf{Fonti social aggiuntive}: Twitter, Facebook e Instagram sono previsti
+        nell'interfaccia ma non vengono effettivamente processati dallo scraper.
+  \item \textbf{Entity resolution}: non \`e presente una riconciliazione delle identit\`a
+        tra fonti diverse (fuzzy matching) per unificare i profili.
+  \item \textbf{Ciclo di feedback}: i dati di interazione non vengono ancora reimmessi
+        nell'arricchimento dei profili.
+  \item \textbf{Ruolo Admin di piattaforma} e flusso di invito via e-mail per utenti non
+        ancora registrati.
+\end{itemize}
+
+\section{Funzionalit\`a implementate con vincoli}
+\begin{itemize}[nosep]
+  \item \textbf{Scraping LinkedIn}: funzionante ma dipendente da cookie di sessione
+        aggiornati; in loro assenza pu\`o produrre dati non validi.
+  \item \textbf{Canale SMS}: attualmente una simulazione su console, senza gateway reale.
+  \item \textbf{Payload/allegato}: la callback \`e un semplice \emph{ping} e si attiva solo
+        con specifici lettori PDF; non raccoglie informazioni sull'host.
+\end{itemize}
+
+\section{Miglioramenti di prodotto}
+Tra i miglioramenti previsti: grafici e \emph{heatmap} di vulnerabilit\`a nel report,
+controllo esplicito del tono (formale/urgente/informale), una dashboard aggregata a livello
+di organizzazione e l'estensione della copertura dei test automatizzati.
+
+%=====================================================================
+% CAP 8 - CONCLUSIONI
+%=====================================================================
+\chapter{Conclusioni}
+Fortify dimostra la fattibilit\`a di una piattaforma di simulazione di social engineering
+guidata dall'intelligenza artificiale, in cui la raccolta OSINT automatizzata e la
+generazione di contenuti personalizzati si combinano per riprodurre in modo etico attacchi
+di \emph{spear phishing}. I sei componenti principali, l'autenticazione multi-tenant e
+l'intera catena e-mail (personalizzazione, invio, tracciamento e reportistica) sono stati
+implementati e validati end-to-end.
+
+Il valore del sistema risiede nella chiusura del ciclo simulazione, misurazione e miglioramento:
+le metriche e i report prodotti trasformano un attacco simulato in informazione azionabile per
+la formazione. Gli sviluppi futuri, orientati alla copertura di ulteriori fonti OSINT, alla
+riconciliazione delle identit\`a e all'arricchimento visuale della reportistica, potranno
+ampliare ulteriormente l'efficacia della piattaforma.
+
+%=====================================================================
+% BIBLIOGRAFIA
+%=====================================================================
+\begin{thebibliography}{99}
+\addcontentsline{toc}{chapter}{Bibliografia}
+\bibitem{owasp} OWASP Foundation, \emph{OWASP Top 10, A07:2021 Identification and
+  Authentication Failures / Phishing}, \url{https://owasp.org}.
+\bibitem{mitre} MITRE, \emph{ATT\&CK: Phishing (T1566)}, \url{https://attack.mitre.org/techniques/T1566/}.
+\bibitem{nist} NIST, \emph{Special Publication 800-115: Technical Guide to Information
+  Security Testing and Assessment}.
+\bibitem{enisa} ENISA, \emph{Social Engineering: Threat Landscape and Good Practices}.
+\bibitem{nuxt} Nuxt, \emph{Nuxt 4 Documentation}, \url{https://nuxt.com/docs}.
+\bibitem{drizzle} Drizzle Team, \emph{Drizzle ORM: Relational Queries v2},
+  \url{https://orm.drizzle.team}.
+\bibitem{betterauth} Better Auth, \emph{Documentation}, \url{https://www.better-auth.com/docs}.
+\bibitem{mastra} Mastra, \emph{Agent Framework Documentation}, \url{https://mastra.ai}.
+\bibitem{gemini} Google, \emph{Gemini API Documentation},
+  \url{https://ai.google.dev/gemini-api/docs}.
+\bibitem{puppeteer} Puppeteer, \emph{Documentation}, \url{https://pptr.dev}.
+\bibitem{postgres} The PostgreSQL Global Development Group, \emph{PostgreSQL 18 Documentation}.
+\end{thebibliography}
+
+\end{document}
